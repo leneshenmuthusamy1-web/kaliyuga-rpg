@@ -54,7 +54,7 @@ export const PanelsUI = {
 
   renderLore() {
     const entriesHtml = LORE_ENTRIES.map((entry) => {
-      const unlocked = gameState.unlockedLore.has(entry.id);
+      const unlocked = gameState.unlockedLore.has(entry.unlock);
       return `<div class="lore-entry ${unlocked ? '' : 'locked'}">
         <h3>${unlocked ? entry.title : '??? — Undiscovered'}</h3>
         <p>${unlocked ? entry.text : 'This entry unlocks through gameplay — find items, complete quests, or speak with Narada.'}</p>

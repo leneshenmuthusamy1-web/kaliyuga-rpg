@@ -65,6 +65,9 @@ export const LORE_ENTRIES = [
   },
 ];
 
+// `id` here is the value passed to GameState.unlockLore(), i.e. each entry's
+// `unlock` key (dialogue/quest effects reference entries by their unlock key,
+// not their internal `id`).
 export function getLoreEntry(id) {
-  return LORE_ENTRIES.find((e) => e.id === id);
+  return LORE_ENTRIES.find((e) => e.unlock === id);
 }

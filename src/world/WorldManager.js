@@ -36,11 +36,19 @@ export class WorldManager {
     this.encounterZones = [];
     this.nearestInteractable = null;
     this.combatActive = false;
+    this.dialogueActive = false;
 
     eventBus.on('combat:started', () => { this.combatActive = true; this.playerController.enabled = false; });
     eventBus.on('combat:ended', () => { this.combatActive = false; this.playerController.enabled = true; });
-    eventBus.on('dialogue:started', () => { this.playerController.enabled = false; });
-    eventBus.on('dialogue:ended', () => { this.playerController.enabled = true; });
+    eventBus.on('dialogue:started', () => {
+      this.dialogueActive = true;
+      this.playerController.enabled = false;
+      if (this.nearestInteractable) {
+        this.nearestInteractable = null;
+        eventBus.emit('world:interactPrompt', { label: null });
+      }
+    });
+    eventBus.on('dialogue:ended', () => { this.dialogueActive = false; this.playerController.enabled = true; });
   }
 
   loadRegion(regionId) {
@@ -115,7 +123,7 @@ export class WorldManager {
   }
 
   update() {
-    if (this.combatActive) return;
+    if (this.combatActive || this.dialogueActive) return;
     const p = this.playerController.position;
 
     let nearest = null;
