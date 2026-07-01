@@ -1,0 +1,337 @@
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #05060a;
+  color: #e8dfc8;
+  font-family: 'Spectral', serif;
+  overflow: hidden;
+}
+
+#app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+#scene-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.hidden { display: none !important; }
+
+/* Boot screen */
+.boot-screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: radial-gradient(ellipse at center, #1a1408 0%, #05060a 75%);
+  z-index: 100;
+  text-align: center;
+  padding: 20px;
+}
+.boot-screen h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 3em;
+  letter-spacing: 0.08em;
+  color: #f2c46d;
+  text-shadow: 0 0 24px rgba(242, 196, 109, 0.5);
+  margin: 0;
+}
+.boot-screen .subtitle {
+  color: #9a8f78;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+.boot-screen button {
+  font-family: 'Cinzel', serif;
+  background: linear-gradient(180deg, #3a2c12, #1c1408);
+  border: 1px solid #f2c46d;
+  color: #f2c46d;
+  padding: 12px 28px;
+  font-size: 1.05em;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+}
+.boot-screen button:hover {
+  background: #f2c46d;
+  color: #1c1408;
+}
+.boot-screen .hint {
+  margin-top: 24px;
+  color: #6b6355;
+  font-size: 0.85em;
+}
+
+/* HUD */
+.hud {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+  width: 280px;
+  padding: 12px 14px;
+  background: rgba(10, 8, 4, 0.72);
+  border: 1px solid rgba(242, 196, 109, 0.35);
+  border-radius: 4px;
+  pointer-events: none;
+}
+.hud .name {
+  font-family: 'Cinzel', serif;
+  color: #f2c46d;
+  font-size: 0.95em;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+.bar-row { margin-bottom: 5px; }
+.bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72em;
+  color: #cfc4a8;
+  margin-bottom: 2px;
+}
+.bar-track {
+  height: 8px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.bar-fill { height: 100%; transition: width 0.3s ease; }
+.bar-fill.hp { background: linear-gradient(90deg, #7a1c1c, #c62828); }
+.bar-fill.mana { background: linear-gradient(90deg, #1c3a7a, #2f6fd6); }
+.bar-fill.stamina { background: linear-gradient(90deg, #1c6b4a, #3fae7d); }
+.bar-fill.presence { background: linear-gradient(90deg, #6b3f9e, #b98af2); }
+.hud .presence-tier {
+  margin-top: 4px;
+  font-size: 0.7em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.hud .presence-tier.high { color: #b98af2; }
+.hud .presence-tier.medium { color: #d7b46a; }
+.hud .presence-tier.low { color: #c65a5a; }
+
+/* Interact prompt */
+.interact-prompt {
+  position: absolute;
+  bottom: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10,8,4,0.8);
+  border: 1px solid rgba(242,196,109,0.5);
+  padding: 8px 16px;
+  border-radius: 3px;
+  z-index: 10;
+  font-size: 0.9em;
+}
+.interact-prompt kbd {
+  background: #f2c46d;
+  color: #1c1408;
+  padding: 1px 7px;
+  border-radius: 3px;
+  font-weight: bold;
+  margin-right: 6px;
+}
+
+/* Dialogue */
+.dialogue-box {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(760px, 90vw);
+  background: rgba(8, 6, 3, 0.92);
+  border: 1px solid #f2c46d;
+  border-radius: 6px;
+  padding: 18px 22px;
+  z-index: 20;
+}
+.dialogue-box .speaker {
+  font-family: 'Cinzel', serif;
+  color: #f2c46d;
+  margin-bottom: 8px;
+  font-size: 1.05em;
+}
+.dialogue-box .line {
+  line-height: 1.5;
+  margin-bottom: 14px;
+  min-height: 3em;
+}
+.dialogue-box .options { display: flex; flex-direction: column; gap: 8px; }
+.dialogue-box .option {
+  text-align: left;
+  background: rgba(242,196,109,0.06);
+  border: 1px solid rgba(242,196,109,0.35);
+  color: #e8dfc8;
+  padding: 9px 14px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-family: 'Spectral', serif;
+  font-size: 0.95em;
+}
+.dialogue-box .option:hover { background: rgba(242,196,109,0.18); }
+.dialogue-box .option.locked {
+  opacity: 0.4;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+.dialogue-box .option .tag {
+  font-family: 'Cinzel', serif;
+  font-size: 0.72em;
+  letter-spacing: 0.05em;
+  margin-right: 8px;
+  padding: 1px 6px;
+  border-radius: 2px;
+}
+.tag.honest { background: #2f6fd6; color: #fff; }
+.tag.tactical { background: #3fae7d; color: #06231a; }
+.tag.deflect { background: #7a3f3f; color: #fff; }
+
+/* Combat UI */
+.combat-ui {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+.combat-ui .combatants {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 40px;
+  pointer-events: auto;
+}
+.combat-ui .party-col, .combat-ui .enemy-col { display: flex; gap: 14px; }
+.combatant-card {
+  width: 150px;
+  background: rgba(8,6,3,0.85);
+  border: 1px solid rgba(242,196,109,0.4);
+  border-radius: 5px;
+  padding: 8px 10px;
+  font-size: 0.78em;
+}
+.combatant-card.dead { opacity: 0.35; }
+.combatant-card.acting { border-color: #f2c46d; box-shadow: 0 0 10px rgba(242,196,109,0.5); }
+.combatant-card .cname { font-family: 'Cinzel', serif; color: #f2c46d; margin-bottom: 4px; }
+.combat-log {
+  pointer-events: none;
+  margin: 0 40px;
+  max-height: 110px;
+  overflow-y: auto;
+  background: rgba(8,6,3,0.7);
+  border-top: 1px solid rgba(242,196,109,0.3);
+  padding: 8px 14px;
+  font-size: 0.85em;
+}
+.combat-actions {
+  pointer-events: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 14px 40px 24px;
+  background: rgba(8,6,3,0.92);
+}
+.combat-actions button {
+  background: rgba(242,196,109,0.08);
+  border: 1px solid rgba(242,196,109,0.4);
+  color: #e8dfc8;
+  padding: 10px 8px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.82em;
+}
+.combat-actions button:hover:not(:disabled) { background: rgba(242,196,109,0.22); }
+.combat-actions button:disabled { opacity: 0.35; cursor: not-allowed; }
+.combat-actions button .cost { display: block; font-size: 0.75em; color: #b98af2; font-family: 'Spectral', serif; }
+
+/* Panels (lore archive, inventory, pause) */
+.panel {
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(760px, 90vw);
+  max-height: 82vh;
+  overflow-y: auto;
+  background: rgba(8,6,3,0.95);
+  border: 1px solid #f2c46d;
+  border-radius: 6px;
+  padding: 22px 26px;
+  z-index: 40;
+}
+.panel h2 {
+  font-family: 'Cinzel', serif;
+  color: #f2c46d;
+  border-bottom: 1px solid rgba(242,196,109,0.3);
+  padding-bottom: 10px;
+}
+.lore-entry {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.lore-entry h3 { font-family: 'Cinzel', serif; color: #d7b46a; margin: 0 0 6px; font-size: 1em; }
+.lore-entry p { line-height: 1.6; margin: 0; font-size: 0.92em; color: #d8cfb8; }
+.lore-entry.locked h3 { color: #55503f; }
+.lore-entry.locked p { color: #4a4636; font-style: italic; }
+.panel button:not(.close-btn) {
+  font-family: 'Cinzel', serif;
+  background: rgba(242,196,109,0.08);
+  border: 1px solid rgba(242,196,109,0.4);
+  color: #e8dfc8;
+  padding: 10px 16px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+.panel button:not(.close-btn):hover { background: rgba(242,196,109,0.22); }
+.panel .close-btn {
+  position: sticky;
+  top: 0;
+  float: right;
+  background: none;
+  border: 1px solid #f2c46d;
+  color: #f2c46d;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 3px;
+}
+
+.notifications {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+.notification {
+  background: rgba(8,6,3,0.9);
+  border: 1px solid rgba(242,196,109,0.5);
+  padding: 8px 14px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  max-width: 320px;
+  animation: fadein 0.25s ease;
+}
+@keyframes fadein { from { opacity: 0; transform: translateY(-6px);} to { opacity: 1; transform: translateY(0);} }

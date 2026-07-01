@@ -1,0 +1,18 @@
+{
+  "name": "kaliyuga-rpg",
+  "version": "0.1.0",
+  "description": "Kaliyuga: The Sandhi — a browser-based Elder-Scrolls-style action RPG prototype",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.164.1"
+  },
+  "devDependencies": {
+    "vite": "^5.3.1"
+  }
+}

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaliyuga: The Sandhi</title>
+  <link rel="stylesheet" href="/src/styles/main.css" />
+</head>
+<body>
+  <div id="app">
+    <canvas id="scene-canvas"></canvas>
+
+    <div id="hud" class="hud hidden"></div>
+    <div id="dialogue-box" class="dialogue-box hidden"></div>
+    <div id="combat-ui" class="combat-ui hidden"></div>
+    <div id="lore-archive" class="panel hidden"></div>
+    <div id="inventory-panel" class="panel hidden"></div>
+    <div id="pause-menu" class="panel hidden"></div>
+    <div id="interact-prompt" class="interact-prompt hidden"></div>
+    <div id="notifications" class="notifications"></div>
+
+    <div id="boot-screen" class="boot-screen">
+      <h1>KALIYUGA: THE SANDHI</h1>
+      <p class="subtitle">Treta&ndash;Dwapara Sandhi &mdash; the seam between ages</p>
+      <button id="start-button">Begin — The Valley of Kalini</button>
+      <button id="continue-button" class="hidden">Continue Saved Game</button>
+      <p class="hint">WASD to move · Mouse to look · E to interact · Tab for Lore Archive · Esc to pause</p>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
