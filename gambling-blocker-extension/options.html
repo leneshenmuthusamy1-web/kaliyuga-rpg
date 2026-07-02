@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gambling Blocker — Settings</title>
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <main>
+    <h1>Gambling Blocker</h1>
+
+    <section>
+      <h2>Built-in blocklist</h2>
+      <p><span id="curatedCount">0</span> known gambling sites are blocked automatically
+         (casinos, sportsbooks, poker rooms, and daily fantasy sites). This list ships with the
+         extension and updates when the extension updates.</p>
+      <details>
+        <summary>Show built-in list</summary>
+        <ul id="curatedList" class="domain-list"></ul>
+      </details>
+    </section>
+
+    <section>
+      <h2>Your custom blocklist</h2>
+      <p>Add any other site you want blocked.</p>
+      <form id="addForm">
+        <input type="text" id="domainInput" placeholder="example.com" />
+        <button type="submit">Add</button>
+      </form>
+      <p id="addError" class="error"></p>
+      <ul id="customList" class="domain-list"></ul>
+    </section>
+
+    <section>
+      <h2>Stats</h2>
+      <p><span id="blockedCount">0</span> blocked page loads since install.
+        <button id="resetCount" class="link-button">Reset</button>
+      </p>
+    </section>
+  </main>
+
+  <script src="domains.js"></script>
+  <script src="util.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
