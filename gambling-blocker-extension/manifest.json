@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "Gambling Site Blocker",
+  "version": "1.0.0",
+  "description": "Blocks access to online casinos, sportsbooks, and betting sites to help you stay in control.",
+  "permissions": ["declarativeNetRequest", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Gambling Blocker"
+  },
+  "options_page": "options.html",
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "gambling_domains",
+        "enabled": true,
+        "path": "rules/gambling-domains.json"
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["blocked.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

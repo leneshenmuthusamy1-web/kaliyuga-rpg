@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gambling Blocker</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header>
+    <h1>Gambling Blocker</h1>
+    <label class="switch">
+      <input type="checkbox" id="enabledToggle" />
+      <span class="slider"></span>
+    </label>
+  </header>
+
+  <p id="statusText" class="status"></p>
+
+  <div class="stat">
+    <span class="stat-number" id="blockedCount">0</span>
+    <span class="stat-label">sites blocked</span>
+  </div>
+
+  <form id="addForm">
+    <input type="text" id="domainInput" placeholder="add a site, e.g. example.com" />
+    <button type="submit">Block</button>
+  </form>
+  <p id="addError" class="error"></p>
+
+  <button id="openOptions" class="link-button">Manage blocklist</button>
+
+  <script src="util.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
