@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claude Runner</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%23da7756%22/></svg>" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>Claude Runner</h1>
+      <p class="tagline">Dodge the bugs. Collect the tokens. Ship the run.</p>
+    </header>
+
+    <div id="stage">
+      <canvas id="game" width="800" height="360"></canvas>
+
+      <div id="overlay" class="visible">
+        <div class="panel">
+          <div id="overlay-title">Claude Runner</div>
+          <div id="overlay-sub">Space / Tap / Click to jump. Hold to jump higher. Avoid the bugs, grab the sparkles.</div>
+          <button id="startBtn">Start Run</button>
+          <div class="hint">Press <kbd>Space</kbd>, <kbd>&uarr;</kbd>, or click/tap the stage</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="hud">
+      <div class="stat"><span class="label">Score</span><span id="score">0</span></div>
+      <div class="stat"><span class="label">Best</span><span id="best">0</span></div>
+      <div class="stat"><span class="label">Tokens</span><span id="tokens">0</span></div>
+    </div>
+
+    <footer>
+      <p>A tiny fan-made arcade game starring the Claude Code mascot. Vanilla JS + Canvas, no build step.</p>
+    </footer>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
